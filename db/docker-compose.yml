@@ -11,4 +11,4 @@ services:
       POSTGRES_USER: db-matrixflowr
       POSTGRES_PASSWORD: pwd-matrixflowr
     volumes:
-      
+      - ./data:/var/lib/postgresql/data

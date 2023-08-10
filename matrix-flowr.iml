@@ -14,7 +14,15 @@
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/.idea/dataSources" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/inspectionProfiles" />
+      <excludeFolder url="file://$MODULE_DIR$/db/data" />
+      <excludeFolder url="file://$MODULE_DIR$/db/data 2" />
+      <excludeFolder url="file://$MODULE_DIR$/venv" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib" />
+    </content>
     <orderEntry type="jdk" jdkName="Python 3.9 (matrix-flowr)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
