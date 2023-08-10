@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}New flow{% endblock %}
+
+{% block content %}
+    <h1 class="title">New flow</h1>
+    <form action="{% url 'create_flow' matrix_id %}" method="post">
+        {% csrf_token %}
+        <div class="field">
+            <label for="name" class="label">Flow name</label>
+            <div class="control">
+                <input type="text" class="input" name="name" id="name">
+            </div>
+        </div>
+        <div class="field">
+            <label for="description" class="label">Description</label>
+            <div class="control">
+                <textarea name="description" id="description" cols="30" rows="10" class="textarea"></textarea>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="field column is-6">
+                <label for="source" class="label">Source IP address</label>
+                <div class="control">
+                    <input type="text" class="input" name="source" id="source">
+                </div>
+            </div>
+            <div class="field column is-6">
+                <label for="destination" class="label">Destination IP address</label>
+                <div class="control">
+                    <input type="text" class="input" name="destination" id="destination">
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <div class="control">
+                <label for="is_opened" class="checkbox">
+                    <input type="checkbox" name="is_opened" id="is_opened">
+                    Flow opened ?
+                </label>
+            </div>
+        </div>
+        <div class="control">
+            <input type="submit" class="button is-primary is-fullwidth" value="Create">
+        </div>
+    </form>
+{% endblock %}

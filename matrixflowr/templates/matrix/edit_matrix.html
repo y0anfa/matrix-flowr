@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit matrix {{ matrix.name }}{% endblock %}
+
+{% block content %}
+    <h1 class="title">Edit matrix {{ matrix.name }}</h1>
+    <form action="{% url 'edit_matrix' matrix.id %}" method="post">
+        {% csrf_token %}
+        <div class="field">
+            <label for="name" class="label">Matrix name</label>
+            <div class="control">
+                <input type="text" class="input" name="name" id="name" value="{{ matrix.name }}">
+            </div>
+        </div>
+        <div class="field">
+            <label for="description" class="label">Description</label>
+            <div class="control">
+                <textarea name="description" id="description" cols="30" rows="10" class="textarea">{{ matrix.description }}</textarea>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="field column is-6">
+                <label for="vendor" class="label">Product vendor</label>
+                <div class="control">
+                    <input type="text" class="input" name="vendor" id="vendor" value="{{ matrix.vendor }}">
+                </div>
+            </div>
+            <div class="field column is-6">
+                <label for="product" class="label">Product model</label>
+                <div class="control">
+                    <input type="text" class="input" name="product" id="product" value="{{ matrix.product }}">
+                </div>
+            </div>
+        </div>
+        <div class="control">
+            <input type="submit" class="button is-primary is-fullwidth" value="Edit">
+        </div>
+    </form>
+{% endblock %}

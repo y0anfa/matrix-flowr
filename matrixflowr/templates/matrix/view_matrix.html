@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block title %}Matrix {{ matrix.name }}{% endblock %}
+
+{% block content %}
+    <div class="block">
+        <div class="card">
+            <div class="card-header">
+                <p class="card-header-title">Matrix {{ matrix.name }}</p>
+            </div>
+            <div class="card-content">
+                <p><b>Description :</b> {{ matrix.description }}</p>
+                <p><b>Product :</b> {{ matrix.vendor }} {{ matrix.product }}</p>
+                <p>Created at <b>{{ matrix.created_at|date:"d/m/Y H:i" }}</b> by <b>{{ matrix.created_by }}</b></p>
+                <p>Updated at <b>{{ matrix.updated_at|date:"d/m/Y H:i" }}</b> by <b>{{ matrix.updated_by }}</b></p>
+            </div>
+            <div class="card-footer">
+                <div class="card-footer-item">
+                    <span><a href="{% url 'edit_matrix' matrix.id %}">Edit</a></span>
+                </div>
+                <div class="card-footer-item">
+                    <span><a href="{% url 'delete_matrix' matrix.id %}">Delete</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block">
+        <div class="is-flex is-flex-direction-row">
+            <h3 class="title is-flex-grow-1">Flows</h3>
+            <a href="{% url 'create_flow' matrix.id %}" class="button right is-primary is-light">New flow</a>
+        </div>
+        {% if flows %}
+        <table class="table is-striped is-fullwidth">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Source</th>
+                    <th>Destination</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for flow in flows %}
+                <tr>
+                    <td>{{ flow.name }}</td>
+                    <td>{{ flow.description }}</td>
+                    <td>{{ flow.source }}</td>
+                    <td>{{ flow.destination }}</td>
+                    <td>
+                        <span class="tag {% if flow.is_active %}is-primary{% else %}is-light{% endif %}">{% if flow.is_active %}Active{% else %}Inactive{% endif %}</span>
+                        <span class="tag {% if flow.is_opened %}is-success{% else %}is-danger{% endif %}">{% if flow.is_opened %}Opened{% else %}Closed{% endif %}</span>
+                    </td>
+                    <td>
+                        <div class="dropdown">
+                            <div class="dropdown-trigger">
+                                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                                    <span>Action</span>
+                                    <span class="icon is-small"><i class="fa-solid fa-angle-down" aria-hidden="true"></i></span>
+                                </button>
+                            </div>
+                            <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                <div class="dropdown-content">
+                                    <a href="{% url 'toggle_flow' matrix.id flow.id %}" class="dropdown-item">
+                                        {% if flow.is_active %}Deactivate{% else %}Activate{% endif %}
+                                    </a>
+                                    <a href="{% url 'edit_flow' matrix.id flow.id %}" class="dropdown-item">
+                                        Edit
+                                    </a>
+                                    <hr class="dropdown-divider">
+                                    <a href="{% url 'delete_flow' matrix.id flow.id %}" class="dropdown-item has-text-danger">
+                                        Delete
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="is-size-2 has-text-centered has-text-grey-light">No flows.</p>
+        {% endif %}
+    </div>
+    {% if comments %}
+    <div class="block">
+        <h3 class="title">Comments</h3>
+        {% for comment in comments %}
+            <div class="box">
+                <p>
+                    <strong>{{ comment.author.username }}</strong> <small>{{ comment.created_at|date:"d/m/Y H:i" }}</small>{% if comment.author == user %} <a
+                        href="{% url 'delete_comment' matrix.id comment.id %}"><span class="tag is-danger is-light">Delete</span></a>{% endif %}<br>
+                    {{ comment.content }}
+                </p>
+            </div>
+        {% endfor %}
+        {% else %}
+        <p class="is-size-3 has-text-centered has-text-grey-light">No comments.</p>
+        {% endif %}
+        <form action="{% url 'create_comment' matrix.id %}" method="post">
+            {% csrf_token %}
+            <div class="field">
+                <label for="content" class="label">New comment</label>
+                <div class="control">
+                    <textarea name="content" id="content" cols="30" rows="3" class="textarea"></textarea>
+                </div>
+            </div>
+            <div class="control">
+                <input type="submit" class="button is-primary is-light is-fullwidth" value="Comment">
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
