@@ -3,6 +3,7 @@
 {% block title %}Edit flow {{ flow.name }}{% endblock %}
 
 {% block content %}
+<div class="box">
     <h1 class="title">Edit flow {{ flow.name }}</h1>
     <form action="{% url 'edit_flow' matrix.id flow.id %}" method="post">
         {% csrf_token %}
@@ -44,4 +45,5 @@
             <input type="submit" class="button is-primary is-fullwidth" value="Edit">
         </div>
     </form>
+</div>
 {% endblock %}

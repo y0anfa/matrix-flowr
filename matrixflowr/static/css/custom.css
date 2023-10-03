@@ -1,20 +1,10 @@
-.custom-fullheight {
-    height: 100vh;
+.page-content {
+    flex: 1;
+    margin: .75rem;
 }
 
-.custom-vnavbar {
-    padding-right: 0;
-    padding-bottom: 0;
-}
-
-.columns:has(.custom-content) {
-    margin-right: 0;
-    margin-bottom: 0;
-}
-
-.custom-content {
-    margin-top: 12px;
-    padding-bottom: 0;
+.footer {
+    bottom: 0;
 }
 
 .custom-login {

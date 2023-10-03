@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('list', views.matrices_list, name='matrices_list'),
     path('<int:id>', views.view_matrix, name='view_matrix'),
     path('new', views.create_matrix, name='create_matrix'),
     path('<int:id>/edit', views.edit_matrix, name='edit_matrix'),

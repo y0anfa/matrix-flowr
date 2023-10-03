@@ -41,21 +41,24 @@
             </div>
         </div>
     </nav>
-    <div class="columns">
-        <div class="column is-2-desktop is-3-tablet custom-vnavbar">
-            <nav class="navbar is-light is-fullwidth custom-fullheight">
-                <div class="navbar-menu is-flex is-flex-direction-column is-justify-content-flex-start">
-                    <div class="navbar-item is-fullwidth">
-                        <a href="{% url 'view_dashboard' %}" class="button is-fullwidth is-light">Dashboard</a>
-                    </div>
-                    <div class="navbar-item is-fullwidth">
-                        <a class="button is-fullwidth is-light">Matrices</a>
-                    </div>
-                    <div class="navbar-item is-fullwidth">
-                        <a class="button is-fullwidth is-light">Reviews</a>
-                    </div>
-                </div>
-            </nav>
+    <div class="columns page-content">
+        <div class="column is-2-desktop is-3-tablet">
+            <aside class="menu">
+                <p class="menu-label">General</p>
+                <ul class="menu-list">
+                    <li><a href="{% url 'view_dashboard' %}">Dashboard</a></li>
+                </ul>
+                <p class="menu-label">Matrices</p>
+                <ul class="menu-list">
+                    <li><a href="{% url 'create_matrix' %}">Create</a></li>
+                    <li><a href="{% url 'matrices_list' %}">Manage</a></li>
+                </ul>
+                <p class="menu-label">Reviews</p>
+                <ul class="menu-list">
+                    <li><a href="#">New</a></li>
+                    <li><a href="#">Manage</a></li>
+                </ul>
+            </aside>
         </div>
         <div class="column is-10-desktop is-9-tablet custom-content">
         {% block content %}

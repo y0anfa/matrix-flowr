@@ -9,6 +9,15 @@ from .forms import MatrixForm, FlowForm, CommentForm
 # Create your views here.
 
 @login_required
+def matrices_list(request):
+    matrices = Matrix.objects.all().order_by("-created_at")
+    for matrix in matrices:
+        matrix.nb_active_flows = Flow.objects.filter(matrix=matrix.id).filter(is_active=True).count()
+        matrix.nb_comments = Comment.objects.filter(matrix=matrix.id).count()
+
+    return render(request, "matrix/matrices_list.html", {"matrices": matrices})
+
+@login_required
 def view_matrix(request, id):
     matrix = Matrix.objects.get(id=id)
     flows = Flow.objects.filter(matrix=id)
@@ -31,7 +40,7 @@ def create_matrix(request):
 
             form.save_m2m()
 
-            return redirect("/")
+            return redirect("matrices_list")
 
     else:
         return render(request, "matrix/create_matrix.html")
@@ -58,7 +67,7 @@ def edit_matrix(request, id):
 def delete_matrix(request, id):
     matrix = Matrix.objects.get(id=id)
     matrix.delete()
-    return redirect('/')
+    return redirect("matrices_list")
 
 @login_required
 def create_flow(request, matrix_id):

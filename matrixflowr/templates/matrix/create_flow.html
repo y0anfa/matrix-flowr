@@ -3,6 +3,7 @@
 {% block title %}New flow{% endblock %}
 
 {% block content %}
+<div class="box">
     <h1 class="title">New flow</h1>
     <form action="{% url 'create_flow' matrix_id %}" method="post">
         {% csrf_token %}
@@ -44,4 +45,5 @@
             <input type="submit" class="button is-primary is-fullwidth" value="Create">
         </div>
     </form>
+</div>
 {% endblock %}

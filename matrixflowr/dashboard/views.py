@@ -12,4 +12,4 @@ def view_dashboard(request):
         matrix.nb_active_flows = Flow.objects.filter(matrix=matrix.id).filter(is_active=True).count()
         matrix.nb_comments = Comment.objects.filter(matrix=matrix.id).count()
 
-    return render(request, "dashboard/index.html", {"matrices": matrices})
+    return render(request, "dashboard/view_dashboard.html", {"matrices": matrices})

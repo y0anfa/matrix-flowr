@@ -5,6 +5,12 @@ dropdowns.forEach((dropdown) => {
 
     dropdownTrigger.addEventListener('click', () => {
         dropdown.classList.toggle('is-active');
+
+        dropdowns.forEach(function (otherDropdown) {
+            if (otherDropdown !== dropdown) {
+                otherDropdown.classList.remove('is-active');
+            }
+        });
     });
 });
 
@@ -15,19 +21,4 @@ document.addEventListener('click', function (event) {
             dropdown.classList.remove('is-active');
         });
     }
-});
-
-dropdowns.forEach(function (dropdown) {
-    const dropdownTrigger = dropdown.querySelector('.dropdown-trigger button');
-
-    dropdownTrigger.addEventListener('click', function () {
-        // Fermer les autres dropdowns ouverts
-        dropdowns.forEach(function (otherDropdown) {
-            if (otherDropdown !== dropdown) {
-                otherDropdown.classList.remove('is-active');
-            }
-        });
-
-        dropdown.classList.toggle('is-active');
-    });
 });

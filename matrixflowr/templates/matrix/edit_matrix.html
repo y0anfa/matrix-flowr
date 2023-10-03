@@ -3,6 +3,7 @@
 {% block title %}Edit matrix {{ matrix.name }}{% endblock %}
 
 {% block content %}
+<div class="box">
     <h1 class="title">Edit matrix {{ matrix.name }}</h1>
     <form action="{% url 'edit_matrix' matrix.id %}" method="post">
         {% csrf_token %}
@@ -36,4 +37,5 @@
             <input type="submit" class="button is-primary is-fullwidth" value="Edit">
         </div>
     </form>
+</div>
 {% endblock %}
