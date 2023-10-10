@@ -64,6 +64,11 @@ def edit_matrix(request, id):
         return render(request, "matrix/edit_matrix.html", {"matrix": matrix})
 
 @login_required
+def confirm_delete_matrix(request, id):
+    matrix = Matrix.objects.get(id=id)
+    return render(request, "matrix/confirm_delete_matrix.html", {"matrix": matrix})
+
+@login_required
 def delete_matrix(request, id):
     matrix = Matrix.objects.get(id=id)
     matrix.delete()
@@ -120,6 +125,12 @@ def toggle_flow(request, matrix_id, flow_id):
     flow.is_active = not flow.is_active
     flow.save()
     return redirect("view_matrix", matrix_id)
+
+@login_required
+def confirm_delete_flow(request, matrix_id, flow_id):
+    matrix = Matrix.objects.get(id=matrix_id)
+    flow = Flow.objects.get(id=flow_id)
+    return render(request, "matrix/confirm_delete_flow.html", {"matrix": matrix, "flow": flow})
 
 @login_required
 def delete_flow(request, matrix_id, flow_id):

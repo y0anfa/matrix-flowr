@@ -11,7 +11,7 @@
                     <a href="{% url 'edit_matrix' matrix.id %}" class="button is-warning is-light"><span class="icon"><i class="fa-solid fa-pen-to-square"></i></span></a>
                 </p>
                 <p class="control">
-                    <a href="{% url 'delete_matrix' matrix.id %}" class="button is-danger"><span class="icon"><i class="fa-solid fa-trash"></i></span></a>
+                    <a href="{% url 'confirm_delete_matrix' matrix.id %}" class="button is-danger"><span class="icon"><i class="fa-solid fa-trash"></i></span></a>
                 </p>
             </div>
         </div>
@@ -65,7 +65,7 @@
                                         Edit
                                     </a>
                                     <hr class="dropdown-divider">
-                                    <a href="{% url 'delete_flow' matrix.id flow.id %}" class="dropdown-item has-text-danger">
+                                    <a href="{% url 'confirm_delete_flow' matrix.id flow.id %}" class="dropdown-item has-text-danger">
                                         Delete
                                     </a>
                                 </div>
