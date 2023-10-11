@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_http_methods
 from django.utils.text import slugify
 
 from .models import Matrix, Flow, Comment
@@ -8,6 +9,8 @@ from .forms import MatrixForm, FlowForm, CommentForm
 
 # Create your views here.
 
+
+@require_http_methods(["GET"])
 @login_required
 def matrices_list(request):
     matrices = Matrix.objects.all().order_by("-created_at")
@@ -17,6 +20,8 @@ def matrices_list(request):
 
     return render(request, "matrix/matrices_list.html", {"matrices": matrices})
 
+
+@require_http_methods(["GET"])
 @login_required
 def view_matrix(request, id):
     matrix = Matrix.objects.get(id=id)
@@ -25,6 +30,8 @@ def view_matrix(request, id):
 
     return render(request, "matrix/view_matrix.html", {"matrix": matrix, "flows": flows, "comments": comments})
 
+
+@require_http_methods(["GET", "POST"])
 @login_required
 def create_matrix(request):
     if request.method == "POST":
@@ -45,6 +52,8 @@ def create_matrix(request):
     else:
         return render(request, "matrix/create_matrix.html")
 
+
+@require_http_methods(["GET", "POST"])
 @login_required
 def edit_matrix(request, id):
     matrix = Matrix.objects.get(id=id)
@@ -63,17 +72,23 @@ def edit_matrix(request, id):
     else:
         return render(request, "matrix/edit_matrix.html", {"matrix": matrix})
 
+
+@require_http_methods(["GET"])
 @login_required
 def confirm_delete_matrix(request, id):
     matrix = Matrix.objects.get(id=id)
     return render(request, "matrix/confirm_delete_matrix.html", {"matrix": matrix})
 
+
+@require_http_methods(["GET"])
 @login_required
 def delete_matrix(request, id):
     matrix = Matrix.objects.get(id=id)
     matrix.delete()
     return redirect("matrices_list")
 
+
+@require_http_methods(["GET", "POST"])
 @login_required
 def create_flow(request, matrix_id):
     if request.method == "POST":
@@ -100,6 +115,8 @@ def create_flow(request, matrix_id):
     else:
         return render(request, "matrix/create_flow.html", {"matrix_id": matrix_id})
 
+
+@require_http_methods(["GET", "POST"])
 @login_required
 def edit_flow(request, matrix_id, flow_id):
     flow = Flow.objects.get(id=flow_id)
@@ -119,6 +136,8 @@ def edit_flow(request, matrix_id, flow_id):
     else:
         return render(request, "matrix/edit_flow.html", {"matrix": matrix, "flow": flow})
 
+
+@require_http_methods(["GET"])
 @login_required
 def toggle_flow(request, matrix_id, flow_id):
     flow = Flow.objects.get(id=flow_id)
@@ -126,18 +145,24 @@ def toggle_flow(request, matrix_id, flow_id):
     flow.save()
     return redirect("view_matrix", matrix_id)
 
+
+@require_http_methods(["GET"])
 @login_required
 def confirm_delete_flow(request, matrix_id, flow_id):
     matrix = Matrix.objects.get(id=matrix_id)
     flow = Flow.objects.get(id=flow_id)
     return render(request, "matrix/confirm_delete_flow.html", {"matrix": matrix, "flow": flow})
 
+
+@require_http_methods(["GET"])
 @login_required
 def delete_flow(request, matrix_id, flow_id):
     flow = Flow.objects.get(id=flow_id)
     flow.delete()
     return redirect("view_matrix", matrix_id)
 
+
+@require_http_methods(["POST"])
 @login_required
 def create_comment(request, matrix_id):
     if request.method == "POST":
@@ -160,6 +185,8 @@ def create_comment(request, matrix_id):
     else:
         return Http404()
 
+
+@require_http_methods(["GET"])
 @login_required
 def delete_comment(request, matrix_id, comment_id):
     comment = Comment.objects.get(id=comment_id)

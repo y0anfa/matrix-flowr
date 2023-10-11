@@ -1,12 +1,15 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
+from django.views.decorators.http import require_http_methods
 from urllib.parse import urlparse
 
 ALLOWED_DOMAINS = ["127.0.0.1"]
 
 # Create your views here.
 
+
+@require_http_methods(["GET", "POST"])
 def login_view(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -30,6 +33,8 @@ def login_view(request):
     else:
         return render(request, "authentication/login.html")
 
+
+@require_http_methods(["GET"])
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect('/auth/login')
