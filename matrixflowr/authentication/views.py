@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
+from urllib.parse import urlparse
+
+ALLOWED_DOMAINS = ["127.0.0.1"]
 
 # Create your views here.
 
@@ -13,8 +16,12 @@ def login_view(request):
         if user is not None:
             login(request, user)
 
-            if request.GET.get('next') is not None:
-                return HttpResponseRedirect(request.GET.get('next'))
+            url = request.GET.get('next')
+
+            if url is not None:
+                parsed_url = urlparse(url)
+                if parsed_url.netloc in ALLOWED_DOMAINS:
+                    return HttpResponseRedirect('http://' + parsed_url.netloc)
             return HttpResponseRedirect('/')
 
         else:
